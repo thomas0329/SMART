@@ -145,7 +145,20 @@ def test(args, checkpoint_path, test_dataloader, criterion):
             # batch['labels'] = batch['x'] # Removed: We want actual labels
             
             # Keep random masking for augmentation/robustness, but don't use the mask for loss
-            batch['x'], batch['mask'], pretrain_mask = random_masking(batch['x'], batch['mask'], args.min_mask_ratio, args.max_mask_ratio)
+            # Randomly augment roughly 50% of the batch
+            do_augment = torch.rand(batch['x'].shape[0], device=batch['x'].device) > 0.5
+            x_aug = batch['x'].clone()
+            mask_aug = batch['mask'].clone()
+            
+            if do_augment.any():
+                x_to_aug = x_aug[do_augment]
+                mask_to_aug = mask_aug[do_augment]
+                x_masked, mask_masked, _ = random_masking(x_to_aug, mask_to_aug, args.min_mask_ratio, args.max_mask_ratio)
+                x_aug[do_augment] = x_masked
+                mask_aug[do_augment] = mask_masked
+            
+            batch['x'] = x_aug
+            batch['mask'] = mask_aug
             
             z = encoder(**batch)
             
@@ -181,7 +194,7 @@ if __name__ == "__main__":
     parser.add_argument('--dataset', type=str, default='mimic_decompensation', choices=['c12', 'c19', 'mimic_mortality', 
                             'mimic_phenotyping', 'mimic_decompensation', 'mimic_lengthofstay'])
     parser.add_argument('--data_dropout', type=float, default=0.)
-    parser.add_argument('--epochs', type=int, default=25)
+    parser.add_argument('--epochs', type=int, default=50)
     parser.add_argument('--lr', type=float, default=1e-3)
     parser.add_argument('--d_model', type=int, default=32)
     parser.add_argument('--seed', type=int, default=3407) 
@@ -308,8 +321,29 @@ if __name__ == "__main__":
             #     h = target_encoder(**batch)
             # batch['labels'] = batch['x'] # Removed
             
-            # Masking for augmentation
-            batch['x'], batch['mask'], pretrain_mask = random_masking(batch['x'], batch['mask'], args.min_mask_ratio, args.max_mask_ratio)
+            # Randomly augment roughly 50% of the batch, keep others original
+            # Generate a random mask for deciding which samples to augment
+            do_augment = torch.rand(batch['x'].shape[0], device=batch['x'].device) > 0.5
+            
+            # Create copies to avoid modifying original batch in place for unaugmented ones
+            x_aug = batch['x'].clone()
+            mask_aug = batch['mask'].clone()
+            
+            # Apply masking only to the selected samples
+            if do_augment.any():
+                # Extract samples to augment
+                x_to_aug = x_aug[do_augment]
+                mask_to_aug = mask_aug[do_augment]
+                
+                # Apply random masking
+                x_masked, mask_masked, _ = random_masking(x_to_aug, mask_to_aug, args.min_mask_ratio, args.max_mask_ratio)
+                
+                # Put back into the batch tensors
+                x_aug[do_augment] = x_masked
+                mask_aug[do_augment] = mask_masked
+            
+            batch['x'] = x_aug
+            batch['mask'] = mask_aug
             
             z = encoder(**batch)
             
@@ -345,7 +379,20 @@ if __name__ == "__main__":
                 #     h = target_encoder(**batch)
                 # batch['labels'] = batch['x']
                 
-                batch['x'], batch['mask'], pretrain_mask = random_masking(batch['x'], batch['mask'], args.min_mask_ratio, args.max_mask_ratio)
+                # Randomly augment roughly 50% of the batch for validation as well
+                do_augment = torch.rand(batch['x'].shape[0], device=batch['x'].device) > 0.5
+                x_aug = batch['x'].clone()
+                mask_aug = batch['mask'].clone()
+                
+                if do_augment.any():
+                    x_to_aug = x_aug[do_augment]
+                    mask_to_aug = mask_aug[do_augment]
+                    x_masked, mask_masked, _ = random_masking(x_to_aug, mask_to_aug, args.min_mask_ratio, args.max_mask_ratio)
+                    x_aug[do_augment] = x_masked
+                    mask_aug[do_augment] = mask_masked
+                
+                batch['x'] = x_aug
+                batch['mask'] = mask_aug
                 
                 z = encoder(**batch)
                 
