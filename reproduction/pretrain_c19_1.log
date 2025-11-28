@@ -1,0 +1,67 @@
+/home/thomas/anaconda3/lib/python3.12/site-packages/torch/distributed/launch.py:208: FutureWarning: The module torch.distributed.launch is deprecated
+and will be removed in future. Use torchrun.
+Note that --use-env is set by default in torchrun.
+If your script expects `--local-rank` argument to be set, please
+change it to read from `os.environ['LOCAL_RANK']` instead. See 
+https://pytorch.org/docs/stable/distributed.html#launch-utility for 
+further instructions
+
+  main()
+2025-11-28 01:48:02,023 {
+    "dataset": "c19",
+    "data_dropout": 0.0,
+    "epochs": 25,
+    "lr": 0.001,
+    "d_model": 32,
+    "seed": 1,
+    "batch_size": 64,
+    "dropout": 0.1,
+    "save_model": true,
+    "save_dir": "./export/c19/smart",
+    "local_rank": 0,
+    "min_mask_ratio": 0.0,
+    "max_mask_ratio": 0.75,
+    "e_layers": 2,
+    "n_heads": 4
+}
+2025-11-28 01:48:04,895 Dataset Loaded.
+/home/thomas/anaconda3/lib/python3.12/site-packages/torch/nn/parallel/distributed.py:2351: UserWarning: You passed find_unused_parameters=true to DistributedDataParallel, `_set_static_graph` will detect unused parameters automatically, so you do not need to set find_unused_parameters=true, just be sure these unused parameters will not change during training loop while calling `_set_static_graph`.
+  warnings.warn(
+2025-11-28 01:48:47,249 Epoch 1: Train Loss 0.1222, Valid Loss 0.0394
+2025-11-28 01:48:47,250 ----- Save best model - L1: 0.0394 -----
+2025-11-28 01:49:34,341 Epoch 2: Train Loss 0.0832, Valid Loss 0.0376
+2025-11-28 01:49:34,342 ----- Save best model - L1: 0.0376 -----
+2025-11-28 01:50:14,935 Epoch 3: Train Loss 0.0707, Valid Loss 0.0383
+2025-11-28 01:50:52,896 Epoch 4: Train Loss 0.0680, Valid Loss 0.0416
+2025-11-28 01:51:29,867 Epoch 5: Train Loss 0.0692, Valid Loss 0.0416
+2025-11-28 01:52:07,304 Epoch 6: Train Loss 0.0661, Valid Loss 0.0364
+2025-11-28 01:52:07,304 ----- Save best model - L1: 0.0364 -----
+2025-11-28 01:52:47,183 Epoch 7: Train Loss 0.0615, Valid Loss 0.0344
+2025-11-28 01:52:47,183 ----- Save best model - L1: 0.0344 -----
+2025-11-28 01:53:27,649 Epoch 8: Train Loss 0.0586, Valid Loss 0.0318
+2025-11-28 01:53:27,650 ----- Save best model - L1: 0.0318 -----
+2025-11-28 01:54:09,038 Epoch 9: Train Loss 0.0570, Valid Loss 0.0319
+2025-11-28 01:54:45,497 Epoch 10: Train Loss 0.0564, Valid Loss 0.0311
+2025-11-28 01:54:45,497 ----- Save best model - L1: 0.0311 -----
+2025-11-28 01:55:23,072 Epoch 11: Train Loss 0.0560, Valid Loss 0.0307
+2025-11-28 01:55:23,072 ----- Save best model - L1: 0.0307 -----
+2025-11-28 01:55:59,439 Epoch 12: Train Loss 0.0549, Valid Loss 0.0297
+2025-11-28 01:55:59,440 ----- Save best model - L1: 0.0297 -----
+2025-11-28 01:56:35,804 Epoch 13: Train Loss 0.0541, Valid Loss 0.0298
+2025-11-28 01:57:12,195 Epoch 14: Train Loss 0.0539, Valid Loss 0.0296
+2025-11-28 01:57:12,195 ----- Save best model - L1: 0.0296 -----
+2025-11-28 01:57:48,554 Epoch 15: Train Loss 0.0542, Valid Loss 0.0297
+2025-11-28 01:58:24,912 Epoch 16: Train Loss 0.0546, Valid Loss 0.0301
+2025-11-28 01:59:01,295 Epoch 17: Train Loss 0.0548, Valid Loss 0.0306
+2025-11-28 01:59:37,653 Epoch 18: Train Loss 0.0554, Valid Loss 0.0309
+2025-11-28 02:00:14,012 Epoch 19: Train Loss 0.0564, Valid Loss 0.0312
+2025-11-28 02:00:52,100 Epoch 20: Train Loss 0.0569, Valid Loss 0.0315
+2025-11-28 02:01:32,358 Epoch 21: Train Loss 0.0572, Valid Loss 0.0318
+2025-11-28 02:02:11,582 Epoch 22: Train Loss 0.0575, Valid Loss 0.0314
+2025-11-28 02:02:51,096 Epoch 23: Train Loss 0.0575, Valid Loss 0.0314
+2025-11-28 02:03:30,705 Epoch 24: Train Loss 0.0573, Valid Loss 0.0314
+2025-11-28 02:04:07,547 Epoch 25: Train Loss 0.0574, Valid Loss 0.0315
+/home/thomas/Desktop/SMART/main_pretrain.py:36: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  checkpoint = torch.load(os.path.join(args.save_dir, checkpoint_path))
+2025-11-28 02:04:07,549 last saved model is in epoch 14
+2025-11-28 02:04:10,300 Test Loss 0.0294

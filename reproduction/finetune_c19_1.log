@@ -1,0 +1,226 @@
+/home/thomas/anaconda3/lib/python3.12/site-packages/torch/distributed/launch.py:208: FutureWarning: The module torch.distributed.launch is deprecated
+and will be removed in future. Use torchrun.
+Note that --use-env is set by default in torchrun.
+If your script expects `--local-rank` argument to be set, please
+change it to read from `os.environ['LOCAL_RANK']` instead. See 
+https://pytorch.org/docs/stable/distributed.html#launch-utility for 
+further instructions
+
+  main()
+2025-11-28 02:04:14,895 {
+    "dataset": "c19",
+    "data_dropout": 0.0,
+    "epochs": 25,
+    "freeze_epochs": 5,
+    "lr": 0.001,
+    "d_model": 32,
+    "seed": 1,
+    "batch_size": 64,
+    "dropout": 0.1,
+    "save_model": true,
+    "save_dir": "./export/c19/smart",
+    "local_rank": 0,
+    "e_layers": 2,
+    "n_heads": 4
+}
+2025-11-28 02:04:16,932 Dataset Loaded.
+/home/thomas/Desktop/SMART/main_finetune.py:161: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  checkpoint = torch.load(os.path.join(args.save_dir, 'checkpoint-mse.pth'))
+2025-11-28 02:04:18,048 last saved model is in epoch 14
+[rank0]:[W1128 02:04:18.710707289 reducer.cpp:1400] Warning: find_unused_parameters=True was specified in DDP constructor, but did not find any unused parameters in the forward pass. This flag results in an extra traversal of the autograd graph every iteration,  which can adversely affect performance. If your model indeed never has any unused parameters in the forward pass, consider turning this flag off. Note that this warning may be a false positive if your model has flow control causing later iterations to have unused parameters. (function operator())
+2025-11-28 02:04:33,697 [[3595  128]
+ [ 162  148]]
+2025-11-28 02:04:33,701 AUC of ROC = 0.8785
+2025-11-28 02:04:33,701 AUC of PRC = 0.4881
+2025-11-28 02:04:33,701 min(+P, Se) = 0.5000
+2025-11-28 02:04:33,701 f1_score = 0.5051
+2025-11-28 02:04:33,701 Epoch 1: Train Loss 0.2102, Valid Loss 0.2070
+2025-11-28 02:04:33,702 ----- Save best model - auprc: 0.4881 -----
+2025-11-28 02:04:49,750 [[3608  115]
+ [ 165  145]]
+2025-11-28 02:04:49,752 AUC of ROC = 0.8927
+2025-11-28 02:04:49,752 AUC of PRC = 0.5287
+2025-11-28 02:04:49,752 min(+P, Se) = 0.5273
+2025-11-28 02:04:49,752 f1_score = 0.5088
+2025-11-28 02:04:49,752 Epoch 2: Train Loss 0.1805, Valid Loss 0.1966
+2025-11-28 02:04:49,752 ----- Save best model - auprc: 0.5287 -----
+2025-11-28 02:05:06,389 [[3624   99]
+ [ 164  146]]
+2025-11-28 02:05:06,391 AUC of ROC = 0.8986
+2025-11-28 02:05:06,402 AUC of PRC = 0.5451
+2025-11-28 02:05:06,402 min(+P, Se) = 0.5419
+2025-11-28 02:05:06,402 f1_score = 0.5261
+2025-11-28 02:05:06,402 Epoch 3: Train Loss 0.1769, Valid Loss 0.1864
+2025-11-28 02:05:06,403 ----- Save best model - auprc: 0.5451 -----
+2025-11-28 02:05:22,808 [[3618  105]
+ [ 153  157]]
+2025-11-28 02:05:22,810 AUC of ROC = 0.9018
+2025-11-28 02:05:22,810 AUC of PRC = 0.5567
+2025-11-28 02:05:22,810 min(+P, Se) = 0.5577
+2025-11-28 02:05:22,810 f1_score = 0.5490
+2025-11-28 02:05:22,810 Epoch 4: Train Loss 0.1726, Valid Loss 0.1839
+2025-11-28 02:05:22,810 ----- Save best model - auprc: 0.5567 -----
+2025-11-28 02:05:40,183 [[3615  108]
+ [ 150  160]]
+2025-11-28 02:05:40,185 AUC of ROC = 0.9055
+2025-11-28 02:05:40,185 AUC of PRC = 0.5682
+2025-11-28 02:05:40,185 min(+P, Se) = 0.5581
+2025-11-28 02:05:40,185 f1_score = 0.5536
+2025-11-28 02:05:40,185 Epoch 5: Train Loss 0.1707, Valid Loss 0.1827
+2025-11-28 02:05:40,185 ----- Save best model - auprc: 0.5682 -----
+2025-11-28 02:06:07,447 [[3598  125]
+ [  95  215]]
+2025-11-28 02:06:07,449 AUC of ROC = 0.9324
+2025-11-28 02:06:07,450 AUC of PRC = 0.7135
+2025-11-28 02:06:07,450 min(+P, Se) = 0.6677
+2025-11-28 02:06:07,450 f1_score = 0.6615
+2025-11-28 02:06:07,450 Epoch 6: Train Loss 0.1646, Valid Loss 0.1549
+2025-11-28 02:06:07,450 ----- Save best model - auprc: 0.7135 -----
+2025-11-28 02:06:31,671 [[3602  121]
+ [  88  222]]
+2025-11-28 02:06:31,673 AUC of ROC = 0.9371
+2025-11-28 02:06:31,673 AUC of PRC = 0.7319
+2025-11-28 02:06:31,673 min(+P, Se) = 0.6837
+2025-11-28 02:06:31,673 f1_score = 0.6799
+2025-11-28 02:06:31,673 Epoch 7: Train Loss 0.1276, Valid Loss 0.1496
+2025-11-28 02:06:31,673 ----- Save best model - auprc: 0.7319 -----
+2025-11-28 02:06:58,678 [[3609  114]
+ [  85  225]]
+2025-11-28 02:06:58,680 AUC of ROC = 0.9396
+2025-11-28 02:06:58,680 AUC of PRC = 0.7463
+2025-11-28 02:06:58,680 min(+P, Se) = 0.6903
+2025-11-28 02:06:58,680 f1_score = 0.6934
+2025-11-28 02:06:58,680 Epoch 8: Train Loss 0.1196, Valid Loss 0.1439
+2025-11-28 02:06:58,680 ----- Save best model - auprc: 0.7463 -----
+2025-11-28 02:07:25,863 [[3631   92]
+ [  93  217]]
+2025-11-28 02:07:25,865 AUC of ROC = 0.9453
+2025-11-28 02:07:25,865 AUC of PRC = 0.7627
+2025-11-28 02:07:25,865 min(+P, Se) = 0.7000
+2025-11-28 02:07:25,865 f1_score = 0.7011
+2025-11-28 02:07:25,865 Epoch 9: Train Loss 0.1125, Valid Loss 0.1334
+2025-11-28 02:07:25,865 ----- Save best model - auprc: 0.7627 -----
+2025-11-28 02:07:52,997 [[3590  133]
+ [  81  229]]
+2025-11-28 02:07:52,999 AUC of ROC = 0.9472
+2025-11-28 02:07:52,999 AUC of PRC = 0.7671
+2025-11-28 02:07:52,999 min(+P, Se) = 0.7065
+2025-11-28 02:07:52,999 f1_score = 0.6815
+2025-11-28 02:07:53,000 Epoch 10: Train Loss 0.1103, Valid Loss 0.1461
+2025-11-28 02:07:53,000 ----- Save best model - auprc: 0.7671 -----
+2025-11-28 02:08:19,395 [[3604  119]
+ [  90  220]]
+2025-11-28 02:08:19,397 AUC of ROC = 0.9483
+2025-11-28 02:08:19,397 AUC of PRC = 0.7587
+2025-11-28 02:08:19,397 min(+P, Se) = 0.6903
+2025-11-28 02:08:19,397 f1_score = 0.6780
+2025-11-28 02:08:19,397 Epoch 11: Train Loss 0.1096, Valid Loss 0.1396
+2025-11-28 02:08:44,170 [[3584  139]
+ [  93  217]]
+2025-11-28 02:08:44,172 AUC of ROC = 0.9429
+2025-11-28 02:08:44,176 AUC of PRC = 0.7468
+2025-11-28 02:08:44,176 min(+P, Se) = 0.6677
+2025-11-28 02:08:44,176 f1_score = 0.6517
+2025-11-28 02:08:44,176 Epoch 12: Train Loss 0.1057, Valid Loss 0.1510
+2025-11-28 02:09:08,401 [[3604  119]
+ [  91  219]]
+2025-11-28 02:09:08,403 AUC of ROC = 0.9496
+2025-11-28 02:09:08,403 AUC of PRC = 0.7676
+2025-11-28 02:09:08,403 min(+P, Se) = 0.6987
+2025-11-28 02:09:08,403 f1_score = 0.6759
+2025-11-28 02:09:08,403 Epoch 13: Train Loss 0.1030, Valid Loss 0.1393
+2025-11-28 02:09:08,403 ----- Save best model - auprc: 0.7676 -----
+2025-11-28 02:09:32,922 [[3588  135]
+ [  83  227]]
+2025-11-28 02:09:32,924 AUC of ROC = 0.9481
+2025-11-28 02:09:32,924 AUC of PRC = 0.7636
+2025-11-28 02:09:32,924 min(+P, Se) = 0.6839
+2025-11-28 02:09:32,924 f1_score = 0.6756
+2025-11-28 02:09:32,924 Epoch 14: Train Loss 0.1021, Valid Loss 0.1456
+2025-11-28 02:10:00,735 [[3609  114]
+ [  85  225]]
+2025-11-28 02:10:00,737 AUC of ROC = 0.9494
+2025-11-28 02:10:00,737 AUC of PRC = 0.7665
+2025-11-28 02:10:00,737 min(+P, Se) = 0.7129
+2025-11-28 02:10:00,737 f1_score = 0.6934
+2025-11-28 02:10:00,737 Epoch 15: Train Loss 0.1021, Valid Loss 0.1403
+2025-11-28 02:10:27,100 [[3637   86]
+ [ 104  206]]
+2025-11-28 02:10:27,102 AUC of ROC = 0.9457
+2025-11-28 02:10:27,103 AUC of PRC = 0.7434
+2025-11-28 02:10:27,103 min(+P, Se) = 0.6903
+2025-11-28 02:10:27,103 f1_score = 0.6844
+2025-11-28 02:10:27,103 Epoch 16: Train Loss 0.0999, Valid Loss 0.1379
+2025-11-28 02:10:52,790 [[3615  108]
+ [  97  213]]
+2025-11-28 02:10:52,792 AUC of ROC = 0.9478
+2025-11-28 02:10:52,792 AUC of PRC = 0.7565
+2025-11-28 02:10:52,792 min(+P, Se) = 0.6774
+2025-11-28 02:10:52,792 f1_score = 0.6751
+2025-11-28 02:10:52,792 Epoch 17: Train Loss 0.0991, Valid Loss 0.1424
+2025-11-28 02:11:17,155 [[3659   64]
+ [ 113  197]]
+2025-11-28 02:11:17,157 AUC of ROC = 0.9450
+2025-11-28 02:11:17,157 AUC of PRC = 0.7462
+2025-11-28 02:11:17,157 min(+P, Se) = 0.6742
+2025-11-28 02:11:17,157 f1_score = 0.6900
+2025-11-28 02:11:17,157 Epoch 18: Train Loss 0.0951, Valid Loss 0.1351
+2025-11-28 02:11:41,615 [[3622  101]
+ [ 104  206]]
+2025-11-28 02:11:41,618 AUC of ROC = 0.9400
+2025-11-28 02:11:41,618 AUC of PRC = 0.7392
+2025-11-28 02:11:41,618 min(+P, Se) = 0.6742
+2025-11-28 02:11:41,618 f1_score = 0.6677
+2025-11-28 02:11:41,618 Epoch 19: Train Loss 0.0925, Valid Loss 0.1459
+2025-11-28 02:12:05,971 [[3636   87]
+ [  99  211]]
+2025-11-28 02:12:05,973 AUC of ROC = 0.9399
+2025-11-28 02:12:05,973 AUC of PRC = 0.7398
+2025-11-28 02:12:05,973 min(+P, Se) = 0.6935
+2025-11-28 02:12:05,973 f1_score = 0.6941
+2025-11-28 02:12:05,973 Epoch 20: Train Loss 0.0926, Valid Loss 0.1449
+2025-11-28 02:12:30,345 [[3636   87]
+ [ 104  206]]
+2025-11-28 02:12:30,346 AUC of ROC = 0.9367
+2025-11-28 02:12:30,347 AUC of PRC = 0.7377
+2025-11-28 02:12:30,347 min(+P, Se) = 0.6827
+2025-11-28 02:12:30,347 f1_score = 0.6833
+2025-11-28 02:12:30,347 Epoch 21: Train Loss 0.0882, Valid Loss 0.1438
+2025-11-28 02:12:58,862 [[3609  114]
+ [  91  219]]
+2025-11-28 02:12:58,864 AUC of ROC = 0.9441
+2025-11-28 02:12:58,864 AUC of PRC = 0.7535
+2025-11-28 02:12:58,864 min(+P, Se) = 0.7061
+2025-11-28 02:12:58,864 f1_score = 0.6812
+2025-11-28 02:12:58,864 Epoch 22: Train Loss 0.0890, Valid Loss 0.1481
+2025-11-28 02:13:24,153 [[3631   92]
+ [ 107  203]]
+2025-11-28 02:13:24,155 AUC of ROC = 0.9382
+2025-11-28 02:13:24,156 AUC of PRC = 0.7309
+2025-11-28 02:13:24,156 min(+P, Se) = 0.6710
+2025-11-28 02:13:24,156 f1_score = 0.6711
+2025-11-28 02:13:24,156 Epoch 23: Train Loss 0.0861, Valid Loss 0.1498
+2025-11-28 02:13:51,402 [[3636   87]
+ [ 102  208]]
+2025-11-28 02:13:51,404 AUC of ROC = 0.9450
+2025-11-28 02:13:51,404 AUC of PRC = 0.7450
+2025-11-28 02:13:51,404 min(+P, Se) = 0.6774
+2025-11-28 02:13:51,404 f1_score = 0.6876
+2025-11-28 02:13:51,404 Epoch 24: Train Loss 0.0845, Valid Loss 0.1442
+2025-11-28 02:14:16,827 [[3664   59]
+ [ 109  201]]
+2025-11-28 02:14:16,829 AUC of ROC = 0.9474
+2025-11-28 02:14:16,829 AUC of PRC = 0.7530
+2025-11-28 02:14:16,829 min(+P, Se) = 0.6871
+2025-11-28 02:14:16,829 f1_score = 0.7053
+2025-11-28 02:14:16,829 Epoch 25: Train Loss 0.0829, Valid Loss 0.1405
+/home/thomas/Desktop/SMART/main_finetune.py:19: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  checkpoint = torch.load(os.path.join(args.save_dir, checkpoint_path))
+2025-11-28 02:14:16,831 last saved model is in epoch 13
+2025-11-28 02:14:18,474 [[3643  115]
+ [  76  200]]
+2025-11-28 02:14:18,476 AUC of ROC = 0.9504
+2025-11-28 02:14:18,476 AUC of PRC = 0.7646
+2025-11-28 02:14:18,476 min(+P, Se) = 0.6895
+2025-11-28 02:14:18,476 f1_score = 0.6768
+2025-11-28 02:14:18,476 Test Loss 0.1293
