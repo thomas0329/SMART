@@ -16,11 +16,13 @@ from utils.utils import set_seed, distributed_init, init_logging
 
 
 def test(args, checkpoint_path, test_dataloader):
-    checkpoint = torch.load(os.path.join(args.save_dir, checkpoint_path))
+    print(f"Testing")
+    checkpoint = torch.load(os.path.join(args.save_dir, checkpoint_path), weights_only=True)
     save_epoch = checkpoint['epoch']
     log(logger, "last saved model is in epoch {}".format(save_epoch))
     encoder.load_state_dict(checkpoint['encoder'])
     classifier.load_state_dict(checkpoint['classifier'])
+    # classifier.load_state_dict(checkpoint['classifier'])
     encoder.eval()
     classifier.eval()
     test_loss = 0
@@ -131,7 +133,7 @@ if __name__ == "__main__":
     
     encoder = Encoder(args).cuda()
     classifier = Classifier(args).cuda()
-    
+
     if args.distributed:
         encoder = torch.nn.parallel.DistributedDataParallel(encoder, device_ids=[args.gpu], output_device=args.local_rank, find_unused_parameters=True)
         classifier = torch.nn.parallel.DistributedDataParallel(classifier, device_ids=[args.gpu], output_device=args.local_rank, find_unused_parameters=True)
@@ -145,7 +147,14 @@ if __name__ == "__main__":
         }
     ]
     optimizer = torch.optim.Adam(param_groups, args.lr)
-    criterion = torch.nn.CrossEntropyLoss()
+
+    # criterion = torch.nn.CrossEntropyLoss()
+    # # 目前1, 3.5 的比例最好 然後參數都是預設值，1,4的AUPRC會下降 但F1-score可以到5106
+    # class_weights = torch.tensor([1.0, 3.5]).float().cuda()
+    class_weights = torch.tensor([1.0, 1]).float().cuda()
+    criterion = torch.nn.CrossEntropyLoss(weight=class_weights)
+
+
     if args.dataset == 'mimic_phenotyping':
         criterion = torch.nn.BCEWithLogitsLoss()
         print_metrics = print_metrics_multilabel
@@ -158,7 +167,7 @@ if __name__ == "__main__":
         print_metrics = print_metrics_binary
         save_metric = 'auprc'
     
-    checkpoint = torch.load(os.path.join(args.save_dir, 'checkpoint-mse.pth'))
+    checkpoint = torch.load(os.path.join(args.save_dir, 'checkpoint-mse.pth'), weights_only=True)
     save_epoch = checkpoint['epoch']
     log(logger, "last saved model is in epoch {}".format(save_epoch))
     encoder.load_state_dict(checkpoint['encoder'])

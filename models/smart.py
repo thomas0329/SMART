@@ -47,7 +47,9 @@ class MLPBlock(nn.Module):
             mlp_ratio=4.,
             proj_drop=0.,
             act_layer=nn.GELU,
+            # norm_layer=nn.Tanh,
             norm_layer=nn.LayerNorm,
+            
     ):
         super().__init__()
         self.norm2 = norm_layer(dim)
@@ -105,6 +107,7 @@ class SeqAttBlock(nn.Module):
             qkv_bias=False,
             proj_drop=0.,
             norm_layer=nn.LayerNorm,
+            # norm_layer=nn.Tanh,
     ):
         super().__init__()
         self.norm1 = norm_layer(dim)
@@ -173,6 +176,7 @@ class VarAttBlock(nn.Module):
             qkv_bias=False,
             proj_drop=0.,
             norm_layer=nn.LayerNorm,
+            # norm_layer=nn.Tanh,
     ):
         super().__init__()
         self.norm1 = norm_layer(dim)
@@ -225,6 +229,7 @@ class BasicBlock(nn.Module):
             qkv_bias=False,
             proj_drop=0.,
             act_layer=nn.GELU,
+            # norm_layer=nn.Tanh,
             norm_layer=nn.LayerNorm,
     ):
         super().__init__()
@@ -303,17 +308,43 @@ class EmbeddingDecoder(nn.Module):
         return x
 
 
+# class Classifier(nn.Module):
+#     def __init__(self, args):
+#         super().__init__()
+#         self.mlp = MLPBlock(dim=args.d_model, mlp_ratio=4, 
+#                             proj_drop=args.dropout, act_layer=nn.GELU, norm_layer=nn.LayerNorm)
+#         self.out = nn.Linear(args.d_model * args.input_dim, args.num_class)
+        
+#     def forward(self, h, **kwargs):
+#         B, I, T, H = h.shape
+#         cls_token = h[:, :, 0]
+#         cls_token = cls_token.reshape(B, I, H)
+#         cls_token = self.mlp(cls_token)
+#         logits = self.out(cls_token.reshape(B, -1))
+#         return logits
+
+## Best
 class Classifier(nn.Module):
     def __init__(self, args):
         super().__init__()
-        self.mlp = MLPBlock(dim=args.d_model, mlp_ratio=4, 
-                            proj_drop=args.dropout, act_layer=nn.GELU, norm_layer=nn.LayerNorm)
-        self.out = nn.Linear(args.d_model * args.input_dim, args.num_class)
-        
+        self.fc = nn.Sequential(
+            nn.Linear(args.d_model * args.input_dim, 256),
+            nn.ReLU(),
+            nn.Dropout(args.dropout),
+
+            nn.Linear(256, 64),
+            nn.ReLU(),
+            nn.Dropout(0.2),
+
+            nn.Linear(64, 32),
+            nn.ReLU(),
+            nn.Dropout(args.dropout),
+
+            nn.Linear(32, args.num_class)
+        )
+
     def forward(self, h, **kwargs):
-        B, I, T, H = h.shape
         cls_token = h[:, :, 0]
-        cls_token = cls_token.reshape(B, I, H)
-        cls_token = self.mlp(cls_token)
-        logits = self.out(cls_token.reshape(B, -1))
-        return logits
+        x = cls_token.reshape(h.size(0), -1)
+        return self.fc(x)
+
