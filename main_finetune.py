@@ -150,8 +150,8 @@ if __name__ == "__main__":
 
     # criterion = torch.nn.CrossEntropyLoss()
     # # 目前1, 3.5 的比例最好 然後參數都是預設值，1,4的AUPRC會下降 但F1-score可以到5106
-    # class_weights = torch.tensor([1.0, 3.5]).float().cuda()
-    class_weights = torch.tensor([1.0, 1]).float().cuda()
+    class_weights = torch.tensor([1.0, 3.5]).float().cuda()
+    
     criterion = torch.nn.CrossEntropyLoss(weight=class_weights)
 
 

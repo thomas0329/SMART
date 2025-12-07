@@ -1,5 +1,5 @@
 random_port=$(shuf -i 1000-9999 -n 1)
-for dataset in 'c12' 'c19'
+for dataset in 'c19'
 do
 for seed in 1 42 3407
 do
